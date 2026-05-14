@@ -2,15 +2,13 @@ CelularWebStory (Versión 2.0)
 Sitio Web + Backend Spring Boot / Thymeleaf
 
 Integrantes:
-Ccasa Yapo, Anngello Fernando
-Marca Alegre, Frank Mariano
-Mendez Quispe, Luis Angel
-Paico Gomez, Luis Eduardo
+1. Ccasa Yapo Anngello Fernando
+2. Marca Alegre Frank Mariano
+3. Mendez Quispe Luis Angel
+4. Paico Gomez Luis Eduardo
 
 📌 Descripción del Proyecto
-
 CelularWebStory es un proyecto web desarrollado para la visualización y presentación de teléfonos celulares mediante una interfaz web dinámica creada con Spring Boot y Thymeleaf.
-
 Esta segunda versión del proyecto incorpora múltiples páginas funcionales conectadas mediante un controlador en Java, permitiendo una mejor organización de la navegación del sitio.
 
 La versión actual incluye:
