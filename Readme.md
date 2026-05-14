@@ -98,39 +98,42 @@ Este controlador administra las rutas del sistema:
 | /garantia    | Garantía                 |
 | /login       | Inicio de sesión         |
 
-📁 Estructura del Proyecto
+## 📁 Estructura del Proyecto
+
+```text
 CelularWebStory-master/
-├── .mvn/
-├── .vscode/
-├── Dockerfile
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── src/
-    └── main/
-        ├── java/
-        │   └── com/example/celular/
-        │       ├── Controller/
-        │       │   └── WebController.java
-        │       ├── Model/
-        │       │   └── Producto.java
-        │       └── CelularApplication.java
-        │
-        └── resources/
-            ├── application.properties
-            ├── static/
-            │   ├── css/
-            │   └── imagenes/
-            │
-            └── templates/
-                ├── inicio.html
-                ├── productos.html
-                ├── Carrito.html
-                ├── Compra.html
-                ├── Ayuda.html
-                ├── Contactanos.html
-                ├── Garantia.html
-                └── sesion.html
+│── .mvn/
+│── .vscode/
+│── Dockerfile
+│── mvnw
+│── mvnw.cmd
+│── pom.xml
+│── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/example/celular/
+│       │       ├── Controller/
+│       │       │   └── WebController.java
+│       │       ├── Model/
+│       │       │   └── Producto.java
+│       │       └── CelularApplication.java
+│       │
+│       └── resources/
+│           ├── application.properties
+│           ├── static/
+│           │   ├── css/
+│           │   └── imagenes/
+│           │
+│           └── templates/
+│               ├── inicio.html
+│               ├── productos.html
+│               ├── Carrito.html
+│               ├── Compra.html
+│               ├── Ayuda.html
+│               ├── Contactanos.html
+│               ├── Garantia.html
+│               └── sesion.html
+```
 
 ⚙️ Dependencias Utilizadas
 Dentro del archivo:
