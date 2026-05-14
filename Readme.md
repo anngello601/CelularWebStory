@@ -84,7 +84,7 @@ Se implementó una sección de productos dinámica conectada mediante un control
 1. Controlador Principal
 src/main/java/com/example/celular/Controller/WebController.java
 
-2. Este controlador administra las rutas del sistema:
+Rutas del sistema
 | Ruta         | Función                  |
 | ------------ | ------------------------ |
 | /inicio      | Página principal         |
@@ -96,6 +96,7 @@ src/main/java/com/example/celular/Controller/WebController.java
 | /contactanos | Contacto                 |
 | /garantia    | Garantía                 |
 | /login       | Inicio de sesión         |
+
 
 ## 📁 Estructura del Proyecto
 
