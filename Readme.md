@@ -8,22 +8,22 @@ Integrantes:
 4. Paico Gomez Luis Eduardo
 
 📌 Descripción del Proyecto
-CelularWebStory es un proyecto web desarrollado para la visualización y presentación de teléfonos celulares mediante una interfaz web dinámica creada con Spring Boot y Thymeleaf.
-Esta segunda versión del proyecto incorpora múltiples páginas funcionales conectadas mediante un controlador en Java, permitiendo una mejor organización de la navegación del sitio.
+CelularWebStory es un proyecto web desarrollado para la visualización y presentación de teléfonos celulares mediante una interfaz web dinámica creada con Spring Boot y Thymeleaf. Esta segunda versión del proyecto incorpora múltiples páginas funcionales conectadas mediante un controlador en Java, permitiendo una mejor organización de la navegación del sitio.
 
 La versión actual incluye:
-Página principal de inicio del sistema.
-Catálogo de productos dinámico usando Thymeleaf.
-Modelo de productos implementado en Java.
-Navegación entre páginas mediante Spring Boot Controller.
-Sistema de carrito de compras.
-Página de compra.
-Página de ayuda al usuario.
-Página de contacto.
-Página de garantía.
-Página de inicio de sesión.
-Integración de imágenes de productos móviles.
-Diseño personalizado mediante CSS.
+1. Página principal de inicio del sistema.
+2. Catálogo de productos dinámico usando Thymeleaf.
+3. Modelo de productos implementado en Java.
+4. Navegación entre páginas mediante Spring Boot Controller.
+5. Sistema de carrito de compras.
+6. Página de compra.
+7. Página de ayuda al usuario.
+8. Página de contacto.
+9. Página de garantía.
+10. Página de inicio de sesión.
+11. Integración de imágenes de productos móviles.
+12. Diseño personalizado mediante CSS.
+
 
 Cómo Ejecutar el Proyecto
 ⚡ Opción 1: Ejecutar Spring Boot localmente
@@ -57,33 +57,34 @@ http://localhost:8080/inicio
 
 ✅ Funcionalidades Implementadas
 🏗️ Estructura General del Sitio
-✔ Página principal (inicio)
-✔ Navegación entre vistas del sistema
-✔ Diseño personalizado mediante CSS
-✔ Imágenes integradas de celulares
-✔ Aplicación estructurada con Spring Boot MVC
+- Página principal (inicio)
+- Navegación entre vistas del sistema
+- Diseño personalizado mediante CSS
+- Imágenes integradas de celulares
+- Aplicación estructurada con Spring Boot MVC
 
 📱 Catálogo de Productos
 Se implementó una sección de productos dinámica conectada mediante un controlador Java.
-Actualmente se muestran celulares como:
-Galaxy A04
-Galaxy S23 Ultra
-Cada producto contiene:
-✔ ID del producto
-✔ Nombre
-✔ Precio
-✔ Stock disponible
-✔ Imagen del producto
+1. Actualmente se muestran celulares como:
+- Galaxy A04
+- Galaxy S23 Ultra
+2. Cada producto contiene:
+- ID del producto
+- Nombre
+- Precio
+- Stock disponible
+- Imagen del producto
 
-La información se genera dinámicamente desde el controlador:
-WebController.java
-usando una lista en memoria mediante el modelo:
-Producto.java
+3. La información se genera dinámicamente desde el controlador:
+- WebController.java
+4. Usando una lista en memoria mediante el modelo:
+- Producto.java
 
 🧠 Backend y Arquitectura MVC
-Controlador Principal
+1. Controlador Principal
 src/main/java/com/example/celular/Controller/WebController.java
-Este controlador administra las rutas del sistema:
+
+2. Este controlador administra las rutas del sistema:
 | Ruta         | Función                  |
 | ------------ | ------------------------ |
 | /inicio      | Página principal         |
@@ -134,24 +135,24 @@ CelularWebStory-master/
 ```
 
 ⚙️ Dependencias Utilizadas
-Dentro del archivo:
-pom.xml
-se implementaron las siguientes dependencias:
-Spring Boot Starter Web MVC: Permite manejar rutas y navegación web.
+1. Dentro del archivo:
+- pom.xml
+2. Se implementaron las siguientes dependencias:
+- Spring Boot Starter Web MVC: Permite manejar rutas y navegación web.
+- Spring Boot Thymeleaf: Permite generar vistas dinámicas HTML
+- Spring Boot DevTools: Facilita la actualización automática del proyecto durante el desarrollo.
+- Maven Wrapper: Permite ejecutar el proyecto sin instalar Maven manualmente.
 
-Spring Boot Thymeleaf: Permite generar vistas dinámicas HTML.
-
-Spring Boot DevTools: Facilita la actualización automática del proyecto durante el desarrollo.
-
-Maven Wrapper: Permite ejecutar el proyecto sin instalar Maven manualmente.
 
 📚 Aprendizajes del Segundo Avance
 Durante este segundo avance del proyecto se aprendió a:
-Implementar una aplicación usando Spring Boot.
-Crear controladores para manejar rutas web.
-Integrar Thymeleaf con páginas HTML.
-Organizar el proyecto mediante arquitectura MVC.
-Crear modelos de datos en Java.
-Mostrar información dinámica de productos.
-Gestionar dependencias con Maven.
-Organizar recursos estáticos como imágenes y estilos CSS.
+1. Implementar una aplicación usando Spring Boot.
+2. Crear controladores para manejar rutas web.
+3. Integrar Thymeleaf con páginas HTML.
+4. Organizar el proyecto mediante arquitectura MVC.
+5. Crear modelos de datos en Java.
+6. Mostrar información dinámica de productos.
+7. Gestionar dependencias con Maven.
+8. Organizar recursos estáticos como imágenes y estilos CSS.
+
+Conclusion: En este segundo avance del proyecto CelularWebStory, se logró implementar una estructura web funcional basada en Spring Boot, incorporando múltiples vistas, navegación dinámica, un catálogo de productos y una mejor organización del sistema mediante el patrón MVC. Asimismo, se integraron recursos visuales y funcionalidades que servirán como base para futuras mejoras del proyecto.
