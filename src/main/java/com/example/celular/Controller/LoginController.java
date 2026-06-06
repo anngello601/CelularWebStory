@@ -28,9 +28,9 @@ public class LoginController {
             HttpSession session,
             Model model) {
 
-        User user = userRepository.findByCorreoAndPassword(correo, password);
+        User user = userRepository.findByCorreo(correo);
 
-        if (user != null) {
+        if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("usuario", user);
             return "redirect:/inicio";
         }

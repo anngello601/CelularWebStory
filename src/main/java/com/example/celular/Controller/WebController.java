@@ -93,9 +93,4 @@ public class WebController {
     public String garantia() {
         return "Garantia";
     }
-
-    @GetMapping("/login")
-    public String login() {
-        return "sesion";
-    }
 }
