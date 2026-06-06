@@ -157,3 +157,7 @@ Durante este segundo avance del proyecto se aprendió a:
 8. Organizar recursos estáticos como imágenes y estilos CSS.
 
 Conclusion: En este segundo avance del proyecto CelularWebStory, se logró implementar una estructura web funcional basada en Spring Boot, incorporando múltiples vistas, navegación dinámica, un catálogo de productos y una mejor organización del sistema mediante el patrón MVC. Asimismo, se integraron recursos visuales y funcionalidades que servirán como base para futuras mejoras del proyecto.
+
+
+Render:
+https://celularwebstory-2.onrender.com/
