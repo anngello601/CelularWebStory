@@ -137,11 +137,16 @@
                         <div th:if="${error}" class="alert alert-danger">
                             Correo o contraseña incorrectos
                         </div>
-
+                        <!-- BOTÓN Ingresar -->
                         <button type="submit" class="btn btn-primary w-100">
                             Ingresar
                         </button>
-
+                        <!-- BOTÓN REGISTRO -->
+                        <div class="text-center mt-3">
+                            <a th:href="@{/registro}" class="btn btn-outline-success w-100">
+                                Registrarse
+                            </a>
+                        </div>
                     </form>
 
                 </div>

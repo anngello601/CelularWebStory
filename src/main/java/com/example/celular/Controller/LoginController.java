@@ -14,11 +14,13 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    // LOGIN FORM
     @GetMapping("/login")
     public String mostrarLogin() {
         return "sesion";
     }
 
+    // LOGIN PROCESS
     @PostMapping("/login")
     public String login(
             @RequestParam String correo,
@@ -26,27 +28,34 @@ public class LoginController {
             HttpSession session,
             Model model) {
 
-        User user = userRepository.findByCorreoAndPassword(
-                correo,
-                password);
+        User user = userRepository.findByCorreoAndPassword(correo, password);
 
         if (user != null) {
-
             session.setAttribute("usuario", user);
-
             return "redirect:/inicio";
         }
 
         model.addAttribute("error", true);
-
         return "sesion";
     }
 
+    // LOGOUT
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-
         session.invalidate();
-
         return "redirect:/";
+    }
+
+    // REGISTRO FORM (FALTABA ESTO)
+    @GetMapping("/registro")
+    public String mostrarRegistro() {
+        return "registro";
+    }
+
+    // REGISTRO PROCESS
+    @PostMapping("/registro")
+    public String registrar(@ModelAttribute User user) {
+        userRepository.save(user);
+        return "redirect:/login";
     }
 }
