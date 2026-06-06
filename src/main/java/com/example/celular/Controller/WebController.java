@@ -1,15 +1,23 @@
 package com.example.celular.Controller;
 
-import com.example.celular.Model.Producto;
+import com.example.celular.Model.*;
+import com.example.celular.Service.ProductoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class WebController {
+
+    @Autowired
+    private ProductoService service;
 
     @GetMapping("/")
     public String raiz() {
@@ -21,23 +29,44 @@ public class WebController {
         return "inicio";
     }
 
-    // 🔥 PRODUCTOS DINÁMICOS
+    // LISTAR PRODUCTOS CON FILTRO POR MARCA
     @GetMapping("/productos")
-    public String productos(Model model) {
+    public String listar(
+            @RequestParam(value = "marca", required = false) List<String> marcasSeleccionadas,
+            Model model) {
 
-        List<Producto> lista = new ArrayList<>();
-
-        lista.add(new Producto(1, "Galaxy A04", 800, 10, "Galaxy A04.png"));
-        lista.add(new Producto(2, "Galaxy S23 Ultra", 4500, 5, "Galaxy S23 Ultra.png"));
-
-        model.addAttribute("productos", lista);
+        if (marcasSeleccionadas != null && !marcasSeleccionadas.isEmpty()) {
+            model.addAttribute("productos", service.buscarPorMarcas(marcasSeleccionadas));
+            model.addAttribute("marcasSeleccionadas", marcasSeleccionadas);
+        } else {
+            model.addAttribute("productos", service.listar());
+        }
 
         return "productos";
     }
 
-    @GetMapping("/producto")
-    public String infoProducto() {
-        return "Info_producto";
+    // DETALLE DE PRODUCTO
+    @GetMapping("/producto/{id}")
+    public String verDetalle(@PathVariable Integer id, Model model) {
+
+        Producto producto = service.buscarPorId(id);
+
+        if (producto == null) {
+            return "redirect:/productos";
+        }
+
+        model.addAttribute("producto", producto);
+
+        return "detalle";
+    }
+
+    // BUSQUEDA DINAMICA
+    @GetMapping("/api/productos/buscar")
+    @ResponseBody
+    public List<Producto> buscarProductos(
+            @RequestParam String q) {
+
+        return service.buscarPorNombre(q);
     }
 
     @GetMapping("/carrito")
@@ -63,5 +92,10 @@ public class WebController {
     @GetMapping("/garantia")
     public String garantia() {
         return "Garantia";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "sesion";
     }
 }

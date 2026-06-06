@@ -1,12 +1,16 @@
-package com.example.celular.Repository;
+package com.example.celular.repository;
 
-import com.example.celular.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+import com.example.celular.Model.Producto;
+import java.util.List;
 
-    User findByCorreoAndPassword(
-            String correo,
-            String password
-    );
+@Repository
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+    
+    List<Producto> findByMarcaIn(List<String> marcas);
+
+    // Búsqueda por nombre
+    List<Producto> findByNombreContainingIgnoreCase(String nombre);
 }
