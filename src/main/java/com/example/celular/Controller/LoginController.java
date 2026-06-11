@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-
     private final UserRepository userRepository;
 
     LoginController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
 
     // LOGIN FORM
     @GetMapping("/login")
