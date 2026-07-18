@@ -88,8 +88,8 @@
             </div>
 
             <div class="col-lg-6 px-lg-4">
-                <p class="text-primary fw-bold mb-1 text-uppercase" style="font-size: 0.85rem; letter-spacing: 1px;"
-                    th:text="${producto.marca}"></p>
+                <p class="text-primary fw-bold mb-1 text-uppercase"
+                    th:text="${producto.marca != null ? producto.marca.nombre : 'Sin marca'}"></p>
                 <h1 class="h3 fw-bold mb-2" th:text="${producto.nombre}"></h1>
 
                 <div class="mb-3" style="font-size: 0.9rem;">
@@ -158,19 +158,23 @@
                         <tbody>
                             <tr>
                                 <td class="bg-light w-50 p-3 fw-bold">Marca</td>
-                                <td class="p-3" th:text="${producto.marca}"></td>
+                                <td class="p-3" th:text="${producto.marca != null ? producto.marca.nombre : 'N/A'}">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="bg-light p-3 fw-bold">Almacenamiento</td>
-                                <td class="p-3" th:text="${producto.almacenamiento}"></td>
+                                <td class="p-3"
+                                    th:text="${producto.almacenamiento != null ? producto.almacenamiento.capacidad : 'N/A'}">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="bg-light p-3 fw-bold">Memoria RAM</td>
-                                <td class="p-3" th:text="${producto.ram}"></td>
+                                <td class="p-3" th:text="${producto.ram != null ? producto.ram.capacidad : 'N/A'}"></td>
                             </tr>
                             <tr>
                                 <td class="bg-light p-3 fw-bold">Procesador</td>
-                                <td class="p-3" th:text="${producto.procesador}"></td>
+                                <td class="p-3"
+                                    th:text="${producto.procesador != null ? producto.procesador.modelo : 'N/A'}"></td>
                             </tr>
                         </tbody>
                     </table>
