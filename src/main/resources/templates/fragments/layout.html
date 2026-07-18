@@ -44,7 +44,7 @@
                         </li>
 
                         <!-- Solo visible para ADMIN -->
-                        <li class="nav-item" th:if="${session.usuario != null && session.usuario.rol == 'ADMIN'}">
+                        <li class="nav-item" th:if="${session.usuario != null && session.usuario.rol.nombre == 'ADMIN'}"></li>
                             <a class="nav-link" th:href="@{/admin/usuarios}">
                                 <i class="fas fa-users-cog"></i> Administrar Usuarios
                             </a>

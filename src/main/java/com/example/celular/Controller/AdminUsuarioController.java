@@ -52,7 +52,7 @@ public class AdminUsuarioController {
                 return "redirect:/admin/usuarios";
             }
 
-            // 🔴 Buscar el rol por nombre
+            // Buscar el rol por nombre
             Rol rol = rolRepository.findByNombre(rolNombre)
                     .orElse(rolRepository.findByNombre("USUARIO")
                             .orElseThrow(() -> new RuntimeException("Rol USUARIO no encontrado")));
@@ -94,7 +94,7 @@ public class AdminUsuarioController {
             if (activo != null)
                 existente.setActivo(activo);
 
-            // 🔴 Actualizar rol
+            // Actualizar rol
             Rol rol = rolRepository.findByNombre(rolNombre)
                     .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + rolNombre));
             existente.setRol(rol);

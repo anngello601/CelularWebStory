@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // 🔴 NUEVA RELACIÓN: ManyToOne con Rol
+    // NUEVA RELACIÓN: ManyToOne con Rol
     @ManyToOne
     @JoinColumn(name = "rol_id", referencedColumnName = "id")
     private Rol rol;
