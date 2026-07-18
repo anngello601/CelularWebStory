@@ -1,0 +1,61 @@
+package com.example.celular.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.example.celular.Model.Producto;
+import com.example.celular.Repository.ProductoRepository;
+
+@Service
+public class ProductoService {
+
+    private final ProductoRepository repo;
+
+    ProductoService(ProductoRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<Producto> listar() {
+        return repo.findAll();
+    }
+
+    public Producto buscarPorId(Integer id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public List<Producto> buscarPorMarcas(List<String> marcas) {
+        return repo.findByMarcaIn(marcas);
+    }
+
+    public List<Producto> buscarPorNombre(String nombre) {
+        return repo.findByNombreContainingIgnoreCase(nombre);
+    }
+
+    public Map<String, Object> reducirStock(Integer id, int cantidad) {
+        Map<String, Object> resultado = new HashMap<>();
+
+        Producto producto = repo.findById(id).orElse(null);
+        if (producto == null) {
+            resultado.put("ok", false);
+            resultado.put("mensaje", "Producto no encontrado");
+            return resultado;
+        }
+
+        if (producto.getStock() < cantidad) {
+            resultado.put("ok", false);
+            resultado.put("mensaje", "Solo quedan " + producto.getStock() + " unidades disponibles");
+            resultado.put("stockActual", producto.getStock());
+            return resultado;
+        }
+
+        producto.setStock(producto.getStock() - cantidad);
+        repo.save(producto);
+
+        resultado.put("ok", true);
+        resultado.put("nuevoStock", producto.getStock());
+        return resultado;
+    }
+}

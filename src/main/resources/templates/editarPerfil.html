@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - NEXO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body class="bg-light">
+
+    <header th:replace="~{fragments/layout :: headerFragment}"></header>
+
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <h2 class="text-center mb-4">Editar Perfil</h2>
+
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                <div class="card shadow-sm p-4">
+
+                    <form th:action="@{/perfil/editar}" method="post">
+
+                        <!-- NOMBRE -->
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" th:value="${user.nombre}"
+                                placeholder="Tu nombre" required>
+                        </div>
+
+                        <!-- CORREO -->
+                        <div class="mb-3">
+                            <label class="form-label">Correo</label>
+                            <input type="email" class="form-control" name="correo" th:value="${user.correo}"
+                                placeholder="correo@email.com" required>
+                        </div>
+
+                        <!-- NUEVA CONTRASEÑA (opcional) -->
+                        <div class="mb-3">
+                            <label class="form-label">Nueva contraseña <span class="text-muted small">(dejar vacío para
+                                    no cambiar)</span></label>
+                            <input type="password" class="form-control" name="nuevaPassword"
+                                placeholder="Mínimo 6 caracteres">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
+                            <i class="fas fa-save me-2"></i>Guardar cambios
+                        </button>
+
+                        <a th:href="@{/perfil}" class="btn btn-outline-secondary w-100">
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/layout :: footerFragment}"></footer>
+    <div th:replace="~{fragments/chatbot :: chatbot}"></div>
+    <div th:replace="~{fragments/darkmode :: darkmode}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/javascript/buscador.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NEXO</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body class="bg-light">
+
+    <header th:replace="~{fragments/layout :: headerFragment}"></header>
+
+    <!-- LOGIN -->
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+
+            <div class="col-md-5">
+
+                <h2 class="text-center mb-4">Iniciar Sesión</h2>
+
+                <div class="card shadow-sm p-4">
+
+                    <form th:action="@{/login}" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Correo</label>
+                            <input type="email" class="form-control" name="correo" placeholder="correo@email.com"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="********" required>
+
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="eyeIcon"></i>
+                            </button>
+
+                            <div th:if="${passwordError}" class="alert alert-warning mt-2 py-2">
+                                <span th:text="${passwordError}"></span>
+                            </div>
+                        </div>
+
+                        <div th:if="${error}" class="alert alert-danger">
+                            Correo o contraseña incorrectos
+                        </div>
+                        <!-- BOTÓN Ingresar -->
+                        <button type="submit" class="btn btn-primary w-100">
+                            Ingresar
+                        </button>
+                        <!-- BOTÓN REGISTRO -->
+                        <div class="text-center mt-3">
+                            <a th:href="@{/registro}" class="btn btn-outline-success w-100">
+                                Registrarse
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <footer th:replace="~{fragments/layout :: footerFragment}"></footer>
+    <div th:replace="~{fragments/chatbot :: chatbot}"></div>
+    <div th:replace="~{fragments/darkmode :: darkmode}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/javascript/jsSesion.js}"></script>
+    <script th:src="@{/javascript/buscador.js}"></script>
+</body>
+
+</html>
