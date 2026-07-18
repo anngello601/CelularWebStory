@@ -17,6 +17,7 @@
     <header th:replace="~{fragments/layout :: headerFragment}"></header>
 
     <main class="container py-4">
+
         <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
             <span th:text="${mensaje}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -92,8 +93,9 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary" onclick="editarUsuario(this)"
-                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol-id=${u.rol.nombre}, data-activo=${u.activo}">
+                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario(this)"
+                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol=${u.rol != null ? u.rol.nombre : 'USUARIO'}, data-activo=${u.activo}"
+                                        th:if="${esAdmin} or (${esAsistente} and ${u.rol != null and u.rol.nombre != 'ADMIN'})">
                                         <i class="fas fa-edit"></i>
                                     </button>
 

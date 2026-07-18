@@ -43,8 +43,9 @@
                             <a class="nav-link text-white" th:href="@{/contactanos}">Contáctanos</a>
                         </li>
 
-                        <!-- Solo visible para ADMIN -->
-                        <li class="nav-item" th:if="${session.usuario != null && session.usuario.rol.nombre == 'ADMIN'}"></li>
+                        <!-- Solo visible para ADMIN o ASISTENTE -->
+                        <li class="nav-item"
+                            th:if="${session.usuario != null and session.usuario.rol != null and (session.usuario.rol.nombre == 'ADMIN' or session.usuario.rol.nombre == 'ASISTENTE')}">
                             <a class="nav-link" th:href="@{/admin/usuarios}">
                                 <i class="fas fa-users-cog"></i> Administrar Usuarios
                             </a>

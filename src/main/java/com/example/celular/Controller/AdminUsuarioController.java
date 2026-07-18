@@ -39,11 +39,11 @@ public class AdminUsuarioController {
     // Guardar nuevo usuario
     @PostMapping("/guardar")
     public String guardarUsuario(@RequestParam String nombre,
-                                 @RequestParam String correo,
-                                 @RequestParam String rolNombre,
-                                 @RequestParam(required = false) String password,
-                                 HttpSession session,
-                                 RedirectAttributes redirectAttrs) {
+            @RequestParam String correo,
+            @RequestParam String rolNombre,
+            @RequestParam(required = false) String password,
+            HttpSession session,
+            RedirectAttributes redirectAttrs) {
         try {
             User usuarioSesion = (User) session.getAttribute("usuario");
 
@@ -94,13 +94,13 @@ public class AdminUsuarioController {
     // Editar usuario
     @PostMapping("/editar")
     public String editarUsuario(@RequestParam Integer id,
-                                @RequestParam String nombre,
-                                @RequestParam String correo,
-                                @RequestParam String rolNombre,
-                                @RequestParam(required = false) String password,
-                                @RequestParam(required = false) Boolean activo,
-                                HttpSession session,
-                                RedirectAttributes redirectAttrs) {
+            @RequestParam String nombre,
+            @RequestParam String correo,
+            @RequestParam String rolNombre,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) Boolean activo,
+            HttpSession session,
+            RedirectAttributes redirectAttrs) {
         try {
             User usuarioSesion = (User) session.getAttribute("usuario");
             if (usuarioSesion == null) {
@@ -121,7 +121,8 @@ public class AdminUsuarioController {
                 return "redirect:/admin/usuarios";
             }
 
-            // 🔴 Validación: si el usuario en sesión es ASISTENTE, no puede asignar rol ADMIN
+            // 🔴 Validación: si el usuario en sesión es ASISTENTE, no puede asignar rol
+            // ADMIN
             if (usuarioSesion.isAsistente() && "ADMIN".equals(rolNombre)) {
                 redirectAttrs.addFlashAttribute("error", "No tienes permisos para asignar el rol ADMIN");
                 return "redirect:/admin/usuarios";
@@ -130,7 +131,8 @@ public class AdminUsuarioController {
             // Actualizar datos
             existente.setNombre(nombre);
             existente.setCorreo(correo);
-            if (activo != null) existente.setActivo(activo);
+            if (activo != null)
+                existente.setActivo(activo);
 
             // Actualizar rol
             Rol rol = rolRepository.findByNombre(rolNombre)
@@ -163,8 +165,8 @@ public class AdminUsuarioController {
     // Eliminar usuario
     @PostMapping("/eliminar")
     public String eliminarUsuario(@RequestParam Integer idUsuario,
-                                  HttpSession session,
-                                  RedirectAttributes redirectAttrs) {
+            HttpSession session,
+            RedirectAttributes redirectAttrs) {
         try {
             User usuarioSesion = (User) session.getAttribute("usuario");
             if (usuarioSesion == null) {
@@ -191,7 +193,8 @@ public class AdminUsuarioController {
                 return "redirect:/admin/usuarios";
             }
 
-            // Si el usuario en sesión no es ADMIN, no puede eliminar ADMIN (redundante pero seguro)
+            // Si el usuario en sesión no es ADMIN, no puede eliminar ADMIN (redundante pero
+            // seguro)
             if (!usuarioSesion.isAdmin() && usuarioEliminar.isAdmin()) {
                 redirectAttrs.addFlashAttribute("error", "No tienes permiso para eliminar un administrador");
                 return "redirect:/admin/usuarios";
@@ -208,9 +211,9 @@ public class AdminUsuarioController {
     // Cambiar rol (acción rápida)
     @PostMapping("/cambiar-rol")
     public String cambiarRol(@RequestParam Integer idUsuario,
-                             @RequestParam String nuevoRolNombre,
-                             HttpSession session,
-                             RedirectAttributes redirectAttrs) {
+            @RequestParam String nuevoRolNombre,
+            HttpSession session,
+            RedirectAttributes redirectAttrs) {
         try {
             User usuarioSesion = (User) session.getAttribute("usuario");
             if (usuarioSesion == null) {
