@@ -94,8 +94,11 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario(this)"
-                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol=${u.rol != null ? u.rol.nombre : 'USUARIO'}, data-activo=${u.activo}"
-                                        th:if="${esAdmin} or (${esAsistente} and ${u.rol != null and u.rol.nombre != 'ADMIN'})">
+                                        th:attr="data-id=${u.id}, 
+                 data-nombre=${u.nombre}, 
+                 data-correo=${u.correo}, 
+                 data-rol=${u.rol != null ? u.rol.nombre : 'USUARIO'}, 
+                 data-activo=${u.activo}">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
@@ -146,9 +149,9 @@
                         <!-- Rol (texto directo, no ID) -->
                         <div class="mb-3">
                             <label>Rol:</label>
-                            <select name="rolNombre" id="editRolId" class="form-select"> <!-- ✅ id="editRolId" -->
+                            <select name="rolNombre" id="editRolId" class="form-select">
                                 <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}"
-                                    th:if="${esAdmin} or (${r.nombre != 'ADMIN'})">
+                                    th:if="${esAdmin} or ${r.nombre != 'ADMIN'}">
                                 </option>
                             </select>
                         </div>

@@ -77,9 +77,7 @@ function editarUsuario(boton) {
         document.getElementById('editId').value = boton.getAttribute('data-id');
         document.getElementById('editNombre').value = boton.getAttribute('data-nombre') || '';
         document.getElementById('editCorreo').value = boton.getAttribute('data-correo') || '';
-        // 🔴 CORREGIDO: usar data-rol-id y editRolId
-        const rolId = boton.getAttribute('data-rol-id');
-        document.getElementById('editRolId').value = rolId || 'USUARIO';
+        document.getElementById('editRolId').value = boton.getAttribute('data-rol') || 'USUARIO';
         document.getElementById('editActivo').value = boton.getAttribute('data-activo') === 'true' ? 'true' : 'false';
         document.getElementById('editPassword').value = '';
         document.getElementById('editPassword').required = false;
