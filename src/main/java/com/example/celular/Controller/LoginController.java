@@ -1,6 +1,8 @@
 package com.example.celular.Controller;
 
+import com.example.celular.Model.Rol;
 import com.example.celular.Model.User;
+import com.example.celular.Repository.RolRepository;
 import com.example.celular.Repository.UserRepository;
 import com.example.celular.Security.JwtUtil;
 import jakarta.servlet.http.Cookie;
@@ -17,10 +19,13 @@ public class LoginController {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    // Agregar campo y constructor
+    private final RolRepository rolRepository;
 
-    LoginController(UserRepository userRepository, JwtUtil jwtUtil) {
+    public LoginController(UserRepository userRepository, JwtUtil jwtUtil, RolRepository rolRepository) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
+        this.rolRepository = rolRepository;
     }
 
     // LOGIN FORM
@@ -85,10 +90,15 @@ public class LoginController {
 
     // REGISTRO PROCESS
     @PostMapping("/registro")
-    public String registrar(@Valid @ModelAttribute User user, BindingResult result) {
+    public String registrar(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "registro";
         }
+        // Asignar rol por defecto (USUARIO)
+        Rol rolUsuario = rolRepository.findByNombre("USUARIO")
+                .orElseThrow(() -> new RuntimeException("Rol USUARIO no encontrado"));
+        user.setRol(rolUsuario);
+        // El usuario se guarda con rol_id = id del rol USUARIO
         userRepository.save(user);
         return "redirect:/login";
     }
@@ -96,11 +106,13 @@ public class LoginController {
     // VER PERFIL
     @GetMapping("/perfil")
     public String verPerfil(HttpSession session, Model model,
-                             @RequestParam(required = false) String exito) {
+            @RequestParam(required = false) String exito) {
         User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
+        if (usuario == null)
+            return "redirect:/login";
         model.addAttribute("usuario", usuario);
-        if ("true".equals(exito)) model.addAttribute("exito", true);
+        if ("true".equals(exito))
+            model.addAttribute("exito", true);
         return "perfil";
     }
 
@@ -108,9 +120,11 @@ public class LoginController {
     @GetMapping("/perfil/editar")
     public String mostrarEditar(HttpSession session, Model model) {
         User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
+        if (usuario == null)
+            return "redirect:/login";
         User userFromDB = userRepository.findById(usuario.getId()).orElse(null);
-        if (userFromDB == null) return "redirect:/login";
+        if (userFromDB == null)
+            return "redirect:/login";
         model.addAttribute("user", userFromDB);
         return "editarPerfil";
     }
@@ -126,10 +140,12 @@ public class LoginController {
             Model model) {
 
         User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
+        if (usuario == null)
+            return "redirect:/login";
 
         User userFromDB = userRepository.findById(usuario.getId()).orElse(null);
-        if (userFromDB == null) return "redirect:/login";
+        if (userFromDB == null)
+            return "redirect:/login";
 
         if (nombre.isBlank()) {
             model.addAttribute("error", "El nombre es obligatorio");
@@ -166,7 +182,8 @@ public class LoginController {
     @PostMapping("/perfil/eliminar")
     public String eliminarCuenta(HttpSession session, HttpServletResponse response) {
         User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
+        if (usuario == null)
+            return "redirect:/login";
         userRepository.deleteById(usuario.getId());
         session.invalidate();
 
