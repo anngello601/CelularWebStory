@@ -15,16 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (texto.length < 2) return;
 
         fetch('/api/productos/buscar?q=' + encodeURIComponent(texto))
-            .then(r => r.json())
+            .then(r => {
+                if (!r.ok) throw new Error('Error en el servidor');
+                return r.json();
+            })
             .then(productos => {
-
-                resultados.innerHTML = '';
-
-                if (productos.length === 0) {
-                    resultados.innerHTML =
-                        '<div class="list-group-item">No se encontraron productos</div>';
-                    resultados.style.display = 'block';
-                    return;
+                // 🔴 Validar que sea un arreglo
+                if (!Array.isArray(productos)) {
+                    throw new Error('Respuesta no válida');
                 }
 
                 productos.forEach(p => {

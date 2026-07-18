@@ -13,68 +13,42 @@
 <body class="bg-light">
 
     <header th:replace="~{fragments/layout :: headerFragment}"></header>
-
+    <!-- Carrusel de Marcas (superior) -->
+    <div class="d-flex justify-content-center gap-4 mb-5 overflow-auto pb-2 px-3">
+        <th:block th:each="m : ${marcas}">
+            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? @{/productos} : @{/productos(marca=${m.nombre})}"
+                class="text-decoration-none text-center">
+                <div class="brand-circle mx-auto mb-2"
+                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'active border-primary shadow-sm' : ''">
+                    <!-- Ícono según el nombre de la marca -->
+                    <i th:if="${m.nombre == 'Apple'}" class="fa-brands fa-apple fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'"></i>
+                    <i th:if="${m.nombre == 'Samsung'}" class="fa-solid fa-mobile-screen fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-secondary'"></i>
+                    <i th:if="${m.nombre == 'Xiaomi'}" class="fa-solid fa-mobile fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-secondary'"></i>
+                    <i th:if="${m.nombre == 'Motorola'}" class="fs-4 fw-bold"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'">M</i>
+                    <i th:if="${m.nombre == 'Google'}" class="fa-brands fa-google fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'"></i>
+                    <!-- Agrega más condiciones para otras marcas (ej. Honor, Poco, Redmi) -->
+                    <i th:if="${m.nombre == 'Honor'}" class="fa-regular fa-star fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'"></i>
+                    <i th:if="${m.nombre == 'Poco'}" class="fa-solid fa-bolt fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'"></i>
+                    <i th:if="${m.nombre == 'Redmi'}" class="fa-solid fa-bolt fs-3"
+                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-dark'"></i>
+                </div>
+                <small class="fw-bold"
+                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains(m.nombre)} ? 'text-primary' : 'text-muted'"
+                    th:text="${m.nombre}"></small>
+            </a>
+        </th:block>
+    </div>
 
     <div class="container-fluid py-4" style="background:#f6f8fb;">
 
-        <div class="d-flex justify-content-center gap-4 mb-5 overflow-auto pb-2 px-3">
 
-            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Apple')} ? @{/productos} : @{/productos(marca='Apple')}"
-                class="text-decoration-none text-center">
-                <div class="brand-circle mx-auto mb-2"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Apple')} ? 'active border-primary shadow-sm' : ''">
-                    <i class="fa-brands fa-apple fs-3"
-                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Apple')} ? 'text-primary' : 'text-dark'"></i>
-                </div>
-                <small class="fw-bold"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Apple')} ? 'text-primary' : 'text-muted'">Apple</small>
-            </a>
-
-            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Samsung')} ? @{/productos} : @{/productos(marca='Samsung')}"
-                class="text-decoration-none text-center">
-                <div class="brand-circle mx-auto mb-2"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Samsung')} ? 'active border-primary shadow-sm' : ''">
-                    <i class="fa-solid fa-mobile-screen fs-3"
-                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Samsung')} ? 'text-primary' : 'text-secondary'"></i>
-                </div>
-                <small class="fw-bold"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Samsung')} ? 'text-primary' : 'text-muted'">Samsung</small>
-            </a>
-
-            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Xiaomi')} ? @{/productos} : @{/productos(marca='Xiaomi')}"
-                class="text-decoration-none text-center">
-                <div class="brand-circle mx-auto mb-2"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Xiaomi')} ? 'active border-primary shadow-sm' : ''">
-                    <i class="fa-solid fa-mobile fs-3"
-                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Xiaomi')} ? 'text-primary' : 'text-secondary'"></i>
-                </div>
-                <small class="fw-bold"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Xiaomi')} ? 'text-primary' : 'text-muted'">Xiaomi</small>
-            </a>
-
-            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Motorola')} ? @{/productos} : @{/productos(marca='Motorola')}"
-                class="text-decoration-none text-center">
-                <div class="brand-circle mx-auto mb-2"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Motorola')} ? 'active border-primary shadow-sm' : ''">
-                    <span class="fs-4 fw-bold"
-                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Motorola')} ? 'text-primary' : 'text-dark'">M</span>
-                </div>
-                <small class="fw-bold"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Motorola')} ? 'text-primary' : 'text-muted'">Motorola</small>
-            </a>
-
-            <a th:href="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Google')} ? @{/productos} : @{/productos(marca='Google')}"
-                class="text-decoration-none text-center">
-                <div class="brand-circle mx-auto mb-2"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Google')} ? 'active border-primary shadow-sm' : ''">
-                    <i class="fa-brands fa-google fs-3"
-                        th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Google')} ? 'text-primary' : 'text-dark'"></i>
-                </div>
-                <small class="fw-bold"
-                    th:classappend="${marcasSeleccionadas != null and marcasSeleccionadas.contains('Google')} ? 'text-primary' : 'text-muted'">Google</small>
-            </a>
-
-        </div>
 
         <div class="row px-lg-4">
 
@@ -103,14 +77,7 @@
                                 value="Xiaomi">
                             <label class="form-check-label text-muted small" for="brandXiaomi">Xiaomi</label>
                         </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input filter-marca" type="checkbox" id="brandPoco" value="Poco">
-                            <label class="form-check-label text-muted small" for="brandPoco">Poco</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input filter-marca" type="checkbox" id="brandRedmi" value="Redmi">
-                            <label class="form-check-label text-muted small" for="brandRedmi">Redmi</label>
-                        </div>
+
                         <div class="form-check mb-2">
                             <input class="form-check-input filter-marca" type="checkbox" id="brandMotorola"
                                 value="Motorola">
@@ -195,8 +162,10 @@
 
                 <div class="row g-4" id="productGrid">
                     <div class="col-xl-4 col-md-6 product-item" th:each="producto : ${productos}"
-                        th:data-marca="${producto.marca}" th:data-precio="${producto.precio}"
-                        th:data-almacenamiento="${producto.almacenamiento}" th:data-nombre="${producto.nombre}">
+                        th:data-marca="${producto.marca != null ? producto.marca.nombre : ''}"
+                        th:data-precio="${producto.precio}"
+                        th:data-almacenamiento="${producto.almacenamiento != null ? producto.almacenamiento.capacidad : ''}"
+                        th:data-nombre="${producto.nombre}">
                         <div class="card border-0 product-card h-100 shadow-sm position-relative">
 
                             <div class="badge-custom rounded badge-purple" th:if="${producto.precioNormal != null}">
@@ -214,8 +183,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="text-primary fw-bold text-uppercase"
-                                        style="font-size: 0.75rem; letter-spacing: 1px;"
-                                        th:text="${producto.marca}"></span>
+                                        th:text="${producto.marca != null ? producto.marca.nombre : 'Sin marca'}"></span>
                                     <span class="text-muted" style="font-size: 0.8rem;">
                                         <i class="fa-solid fa-star" style="color: #e51a4b;"></i> <span
                                             th:text="${producto.rating}">4.9</span>
@@ -228,12 +196,16 @@
                                 </h6>
 
                                 <ul class="list-unstyled text-muted mb-4" style="font-size: 0.85rem;">
-                                    <li class="mb-2"><i class="fa-solid fa-microchip text-secondary me-2"></i> <span
-                                            th:text="${producto.procesador}"></span></li>
-                                    <li class="mb-2"><i class="fa-solid fa-memory text-secondary me-2"></i> <span
-                                            th:text="${producto.ram}"></span> RAM</li>
-                                    <li><i class="fa-solid fa-hard-drive text-secondary me-2"></i> <span
-                                            th:text="${producto.almacenamiento}"></span></li>
+                                    <span
+                                        th:text="${producto.marca != null ? producto.marca.nombre : 'Sin marca'}"></span>
+                                    <li><span
+                                            th:text="${producto.procesador != null ? producto.procesador.modelo : 'N/A'}"></span>
+                                    </li>
+                                    <li><span th:text="${producto.ram != null ? producto.ram.capacidad : 'N/A'}"></span>
+                                        RAM</li>
+                                    <li><span
+                                            th:text="${producto.almacenamiento != null ? producto.almacenamiento.capacidad : 'N/A'}"></span>
+                                    </li>
                                 </ul>
 
                                 <div class="d-flex justify-content-between align-items-end mt-auto">
@@ -259,26 +231,8 @@
                         </div>
                     </div>
                 </div>
+                <div th:replace="~{fragments/paginacion :: paginacion}"></div>
 
-                <nav class="mt-5">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled"><a
-                                class="page-link border-0 text-dark bg-white shadow-sm mx-1 rounded" href="#"><i
-                                    class="fa-solid fa-chevron-left"></i></a></li>
-                        <li class="page-item active"><a
-                                class="page-link border-0 bg-primary text-white shadow-sm mx-1 rounded" href="#">1</a>
-                        </li>
-                        <li class="page-item"><a class="page-link border-0 text-dark bg-white shadow-sm mx-1 rounded"
-                                href="#">2</a></li>
-                        <li class="page-item"><a class="page-link border-0 text-dark bg-white shadow-sm mx-1 rounded"
-                                href="#">3</a></li>
-                        <li class="page-item"><span class="page-link border-0 text-muted bg-transparent">...</span></li>
-                        <li class="page-item"><a class="page-link border-0 text-dark bg-white shadow-sm mx-1 rounded"
-                                href="#">6</a></li>
-                        <li class="page-item"><a class="page-link border-0 text-dark bg-white shadow-sm mx-1 rounded"
-                                href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
-                    </ul>
-                </nav>
 
             </div>
         </div>
@@ -288,7 +242,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/javascript/carrito.js}"></script>
-
+    <script th:src="@{/javascript/paginacionGlobal.js}"></script>
+    <script th:src="@{/javascript/buscador.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Esperar un poco para que Thymeleaf termine de renderizar
+            setTimeout(function () {
+                if (typeof inicializarPaginacion === 'function') {
+                    // Usa reiniciarPaginacion para forzar el cálculo
+                    reiniciarPaginacion('productGrid', 10);
+                }
+            }, 100);
+        });
+    </script>
     <script>
         // =============================================
         // BUSCADOR
@@ -422,6 +388,10 @@
             ocultos.forEach(i => productGrid.appendChild(i));
 
             actualizarContador(visibles.length);
+
+            if (typeof reiniciarPaginacion === 'function') {
+                reiniciarPaginacion('productGrid', 10);
+            }
         }
 
         function limpiarFiltros() {
@@ -433,6 +403,10 @@
             sortSelect.value = 'default';
             document.querySelectorAll('.product-item').forEach(i => i.style.display = '');
             actualizarContador(document.querySelectorAll('.product-item').length);
+
+            if (typeof reiniciarPaginacion === 'function') {
+                reiniciarPaginacion('productGrid', 10);
+            }
         }
 
         document.getElementById('btnAplicar').addEventListener('click', aplicarFiltros);
@@ -443,6 +417,16 @@
         // Contador inicial
         window.addEventListener('load', function () {
             actualizarContador(document.querySelectorAll('.product-item').length);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof inicializarPaginacion === 'function') {
+                // El segundo parámetro es el número de elementos por página
+                inicializarPaginacion('productGrid', 10);
+            } else {
+                console.warn('⚠️ paginacionGlobal.js no cargado');
+            }
         });
     </script>
 

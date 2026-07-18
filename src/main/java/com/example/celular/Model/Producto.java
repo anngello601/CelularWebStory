@@ -18,21 +18,27 @@ public class Producto {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @NotBlank(message = "La marca es obligatoria")
-    @Column(name = "marca")
-    private String marca;
+    // ===== NUEVAS RELACIONES =====
+    @ManyToOne
+    @JoinColumn(name = "marca_id")
+    private Marca marca;
 
-    @Column(name = "categoria", columnDefinition = "VARCHAR(255)")
-    private String categoria;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
-    @Column(name = "almacenamiento")
-    private String almacenamiento;
+    @ManyToOne
+    @JoinColumn(name = "almacenamiento_id")
+    private Almacenamiento almacenamiento;
 
-    @Column(name = "ram")
-    private String ram;
+    @ManyToOne
+    @JoinColumn(name = "ram_id")
+    private Ram ram;
 
-    @Column(name = "procesador")
-    private String procesador;
+    @ManyToOne
+    @JoinColumn(name = "procesador_id")
+    private Procesador procesador;
+    // ===== FIN RELACIONES =====
 
     @Column(name = "precio_normal")
     private Double precioNormal;
@@ -73,42 +79,24 @@ public class Producto {
     @Column(name = "devoluciones", columnDefinition = "TEXT")
     private String devoluciones;
 
-    // ==========================================
-    // Constructores
-    // ==========================================
-
+    // ===== Constructores =====
     public Producto() {
     }
 
-    public Producto(Integer id, String nombre, String marca, String categoria, String almacenamiento, String ram,
-            String procesador, Double precioNormal, double precio, Double precioTarjeta, int stock, String imagen,
-            Double rating, Integer numOpiniones, String eanUpc, String tiempoEnvio, String garantia, String condiciones,
-            String devoluciones) {
-        this.id = id;
+    public Producto(String nombre, Marca marca, Categoria categoria, Almacenamiento almacenamiento,
+            Ram ram, Procesador procesador, double precio, int stock, String imagen) {
         this.nombre = nombre;
         this.marca = marca;
         this.categoria = categoria;
         this.almacenamiento = almacenamiento;
         this.ram = ram;
         this.procesador = procesador;
-        this.precioNormal = precioNormal;
         this.precio = precio;
-        this.precioTarjeta = precioTarjeta;
         this.stock = stock;
         this.imagen = imagen;
-        this.rating = rating;
-        this.numOpiniones = numOpiniones;
-        this.eanUpc = eanUpc;
-        this.tiempoEnvio = tiempoEnvio;
-        this.garantia = garantia;
-        this.condiciones = condiciones;
-        this.devoluciones = devoluciones;
     }
 
-    // ==========================================
-    // Getters y Setters
-    // ==========================================
-
+    // ===== Getters y Setters =====
     public Integer getId() {
         return id;
     }
@@ -125,43 +113,43 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
-    public String getAlmacenamiento() {
+    public Almacenamiento getAlmacenamiento() {
         return almacenamiento;
     }
 
-    public void setAlmacenamiento(String almacenamiento) {
+    public void setAlmacenamiento(Almacenamiento almacenamiento) {
         this.almacenamiento = almacenamiento;
     }
 
-    public String getRam() {
+    public Ram getRam() {
         return ram;
     }
 
-    public void setRam(String ram) {
+    public void setRam(Ram ram) {
         this.ram = ram;
     }
 
-    public String getProcesador() {
+    public Procesador getProcesador() {
         return procesador;
     }
 
-    public void setProcesador(String procesador) {
+    public void setProcesador(Procesador procesador) {
         this.procesador = procesador;
     }
 
