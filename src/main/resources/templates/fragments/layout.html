@@ -43,11 +43,19 @@
                             <a class="nav-link text-white" th:href="@{/contactanos}">Contáctanos</a>
                         </li>
 
+                        <!-- Solo visible para ADMIN -->
+                        <li class="nav-item" th:if="${session.usuario != null && session.usuario.rol == 'ADMIN'}">
+                            <a class="nav-link" th:href="@{/admin/usuarios}">
+                                <i class="fas fa-users-cog"></i> Administrar Usuarios
+                            </a>
+                        </li>
+
                         <li class="nav-item" th:if="${session.usuario != null}">
                             <a th:href="@{/carrito}" class="btn btn-outline-light">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <button id="darkToggle" title="Cambiar tema">🌙</button>
                         </li>
@@ -73,8 +81,12 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <span class="dropdown-item-text">
-                                        <strong th:text="${session.usuario.correo}"></strong>
-                                    </span>
+                                        <strong th:text="${session.usuario.nombre}"></strong><br>
+                                        <small class="text-muted" th:text="${session.usuario.correo}"></small><br>
+                                        <span class="badge"
+                                            th:classappend="${session.usuario.rol.nombre == 'ADMIN' ? 'bg-danger' : (session.usuario.rol.nombre == 'ASISTENTE' ? 'bg-warning text-dark' : 'bg-secondary')}"
+                                            th:text="${session.usuario.rol.nombre}">
+                                        </span>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -129,7 +141,7 @@
             </div>
         </div>
         <div class="position-absolute bottom-0 end-0 me-3 mb-2 small text-secondary">
-            v 3.0.2
+            v 4.0.3
         </div>
     </footer>
     <script th:src="@{/javascript/buscador.js}"></script>

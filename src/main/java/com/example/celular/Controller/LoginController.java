@@ -109,7 +109,7 @@ public class LoginController {
     public String mostrarEditar(HttpSession session, Model model) {
         User usuario = (User) session.getAttribute("usuario");
         if (usuario == null) return "redirect:/login";
-        User userFromDB = userRepository.findById(Long.valueOf(usuario.getId())).orElse(null);
+        User userFromDB = userRepository.findById(usuario.getId()).orElse(null);
         if (userFromDB == null) return "redirect:/login";
         model.addAttribute("user", userFromDB);
         return "editarPerfil";
@@ -128,7 +128,7 @@ public class LoginController {
         User usuario = (User) session.getAttribute("usuario");
         if (usuario == null) return "redirect:/login";
 
-        User userFromDB = userRepository.findById(Long.valueOf(usuario.getId())).orElse(null);
+        User userFromDB = userRepository.findById(usuario.getId()).orElse(null);
         if (userFromDB == null) return "redirect:/login";
 
         if (nombre.isBlank()) {
@@ -167,7 +167,7 @@ public class LoginController {
     public String eliminarCuenta(HttpSession session, HttpServletResponse response) {
         User usuario = (User) session.getAttribute("usuario");
         if (usuario == null) return "redirect:/login";
-        userRepository.deleteById(Long.valueOf(usuario.getId()));
+        userRepository.deleteById(usuario.getId());
         session.invalidate();
 
         Cookie jwtCookie = new Cookie("jwt", null);

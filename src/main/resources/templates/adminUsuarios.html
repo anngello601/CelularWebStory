@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Usuarios - NEXO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+</head>
+
+<body class="bg-light">
+
+    <header th:replace="~{fragments/layout :: headerFragment}"></header>
+
+    <main class="container py-4">
+        <!-- Título y botón agregar -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-users-cog me-2"></i>Gestión de Usuarios</h2>
+            <button class="btn btn-success" onclick="abrirModalAgregar()">
+                <i class="fas fa-user-plus"></i> Agregar Usuario
+            </button>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card p-3 mb-4 shadow-sm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" id="buscarUsuario" class="form-control"
+                            placeholder="Buscar por nombre o correo..." onkeyup="filtrarUsuarios()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="filtroRol" class="form-select" onchange="filtrarUsuarios()">
+                        <option value="">Todos los roles</option>
+                        <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select id="filtroEstado" class="form-select" onchange="filtrarUsuarios()">
+                        <option value="">Todos los estados</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de usuarios -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table id="tablaUsuarios" class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla">
+                            <tr th:each="u : ${usuarios}">
+                                <td th:text="${u.id}"></td> <!-- ← Cambio aquí -->
+                                <td th:text="${u.nombre}"></td>
+                                <td th:text="${u.correo}"></td>
+                                <td th:text="${u.rol != null ? u.rol.nombre : 'Sin rol'}"></td>
+                                <td>
+                                    <span class="badge"
+                                        th:classappend="${u.rol.nombre == 'ADMIN' ? 'bg-danger' : (u.rol.nombre == 'ASISTENTE' ? 'bg-warning text-dark' : 'bg-secondary')}"
+                                        th:text="${u.rol != null ? u.rol.nombre : 'Sin rol'}">
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario(this)"
+                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol=${u.rol}, data-activo=${u.activo}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="eliminarUsuario(this)"
+                                        th:attr="data-id=${u.id}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginación (reutiliza tu fragmento) -->
+        <div th:replace="~{fragments/paginacion :: paginacion}"></div>
+
+    </main>
+
+    <!-- MODAL AGREGAR / EDITAR USUARIO -->
+    <div class="modal fade" id="modalUsuario" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formUsuario" th:action="@{/admin/usuarios/guardar}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalUsuarioTitulo">Agregar Usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Campo oculto para ID -->
+                        <input type="hidden" name="id" id="editId">
+
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label>Nombre:</label>
+                            <input type="text" name="nombre" id="editNombre" class="form-control" required>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="mb-3">
+                            <label>Correo:</label>
+                            <input type="email" name="correo" id="editCorreo" class="form-control" required>
+                        </div>
+
+                        <!-- Rol (texto directo, no ID) -->
+                        <div class="mb-3">
+                            <label>Rol:</label>
+                            <select name="rolNombre" id="editRol" class="form-select">
+                                <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}"></option>
+                            </select>
+                        </div>
+
+                        <!-- Estado (activo) -->
+                        <div class="mb-3">
+                            <label>Estado:</label>
+                            <select name="activo" id="editActivo" class="form-select">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="mb-3" id="divPassword">
+                            <label>Contraseña:</label>
+                            <input type="password" name="password" id="editPassword" class="form-control"
+                                placeholder="Mínimo 6 caracteres" required>
+                            <small class="text-muted">Dejar vacío para no cambiar (en edición).</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ELIMINAR -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form id="formEliminar" th:action="@{/admin/usuarios/eliminar}" method="post">
+                        <input type="hidden" name="idUsuario" id="eliminarId">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <footer th:replace="~{fragments/layout :: footerFragment}"></footer>
+    <div th:replace="~{fragments/chatbot :: chatbot}"></div>
+    <div th:replace="~{fragments/darkmode :: darkmode}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/javascript/adminUsuarios.js}"></script>
+    <script th:src="@{/javascript/paginacionGlobal.js}"></script>
+    <script>
+        // Inicializar paginación
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof inicializarPaginacion === 'function') {
+                inicializarPaginacion('tablaUsuarios', 10);
+            }
+        });
+    </script>
+</body>
+
+</html>
