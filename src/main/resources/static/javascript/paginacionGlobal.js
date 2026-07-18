@@ -1,26 +1,33 @@
 /**
- * paginacionGlobal.js - Paginación reutilizable para tablas y grids
+ * paginacionGlobal.js - Universal (tablas y grids)
  */
 const paginacionEstado = {};
 
-/**
- * Inicializa la paginación en un contenedor.
- * @param {string} contenedorId - ID del contenedor (ej. 'productGrid').
- * @param {number} elementosPorPagina - Cuántos elementos mostrar por página.
- * @param {string} selectorItems - Selector CSS para los elementos hijos (por defecto '> *').
- */
-function inicializarPaginacion(contenedorId, elementosPorPagina = 10, selectorItems = '> *') {
+function inicializarPaginacion(contenedorId, elementosPorPagina = 10) {
     const contenedor = document.getElementById(contenedorId);
     if (!contenedor) {
         console.warn(`⚠️ Contenedor "${contenedorId}" no encontrado`);
         return;
     }
 
-    // Obtener todos los elementos hijos directos (visibles)
-    const elementos = Array.from(contenedor.querySelectorAll(selectorItems))
-        .filter(el => el.style.display !== 'none');
-    const total = elementos.length;
+    // 🔴 DETECTAR si es tabla o grid
+    let elementos;
+    const tabla = contenedor.closest('table') || contenedor.querySelector('table');
+    if (tabla) {
+        const tbody = tabla.querySelector('tbody');
+        if (!tbody) {
+            console.warn('⚠️ No se encontró <tbody>');
+            return;
+        }
+        elementos = Array.from(tbody.querySelectorAll('tr'))
+            .filter(fila => fila.style.display !== 'none');
+    } else {
+        // Grid: usar .product-item o todos los hijos directos visibles
+        elementos = Array.from(contenedor.children)
+            .filter(el => el.style.display !== 'none' && el.tagName !== 'SCRIPT');
+    }
 
+    const total = elementos.length;
     if (total === 0) {
         document.getElementById('pagInfo').textContent = 'No hay registros';
         document.getElementById('pagBtns').innerHTML = '';
@@ -48,9 +55,7 @@ function mostrarPagina(contenedorId, pagina) {
     const inicio = (pagina - 1) * porPagina;
     const fin = Math.min(inicio + porPagina, total);
 
-    // Ocultar todos los elementos
     elementos.forEach(el => el.style.display = 'none');
-    // Mostrar solo los de la página actual
     for (let i = inicio; i < fin; i++) {
         if (elementos[i]) elementos[i].style.display = '';
     }
@@ -85,5 +90,5 @@ function reiniciarPaginacion(contenedorId, elementosPorPagina = 10) {
     delete paginacionEstado[contenedorId];
     setTimeout(() => {
         inicializarPaginacion(contenedorId, elementosPorPagina);
-    }, 50);
+    }, 100);
 }

@@ -250,7 +250,7 @@
             setTimeout(function () {
                 if (typeof inicializarPaginacion === 'function') {
                     // Usa reiniciarPaginacion para forzar el cálculo
-                    reiniciarPaginacion('productGrid', 10);
+                    reiniciarPaginacion('productGrid', 12);
                 }
             }, 100);
         });
@@ -390,7 +390,7 @@
             actualizarContador(visibles.length);
 
             if (typeof reiniciarPaginacion === 'function') {
-                reiniciarPaginacion('productGrid', 10);
+                reiniciarPaginacion('productGrid', 12);
             }
         }
 
@@ -405,7 +405,7 @@
             actualizarContador(document.querySelectorAll('.product-item').length);
 
             if (typeof reiniciarPaginacion === 'function') {
-                reiniciarPaginacion('productGrid', 10);
+                reiniciarPaginacion('productGrid', 12);
             }
         }
 
@@ -417,16 +417,6 @@
         // Contador inicial
         window.addEventListener('load', function () {
             actualizarContador(document.querySelectorAll('.product-item').length);
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (typeof inicializarPaginacion === 'function') {
-                // El segundo parámetro es el número de elementos por página
-                inicializarPaginacion('productGrid', 10);
-            } else {
-                console.warn('⚠️ paginacionGlobal.js no cargado');
-            }
         });
     </script>
 
