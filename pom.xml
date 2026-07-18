@@ -74,13 +74,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <scope>runtime</scope>
-</dependency>
-<<<<<<< HEAD
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- JWT (para el inicio de sesion) -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -99,9 +97,6 @@
 			<version>0.12.6</version>
 			<scope>runtime</scope>
 		</dependency>
-=======
->>>>>>> e44d6b6566b8fd52f23689746da7ce15b2919052
-		
 	</dependencies>
 
 	<build>
