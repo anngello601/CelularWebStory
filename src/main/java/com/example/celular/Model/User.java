@@ -36,7 +36,8 @@ public class User {
     private boolean activo = true;
 
     // ========== CONSTRUCTORES ==========
-    public User() {}
+    public User() {
+    }
 
     public User(String nombre, String correo, String password, Rol rol) {
         this.nombre = nombre;
@@ -47,31 +48,61 @@ public class User {
     }
 
     // ========== GETTERS Y SETTERS ==========
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public Rol getRol() { return rol; }
-    public void setRol(Rol rol) { this.rol = rol; }
+    public String getCorreo() {
+        return correo;
+    }
 
-    public boolean isActivo() { return activo; }
-    public void setActivo(boolean activo) { this.activo = activo; }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 
     // ========== MÉTODOS AUXILIARES ==========
     public boolean isAdmin() {
-        return rol != null && "ADMIN".equalsIgnoreCase(rol.getNombre());
+        return rol != null && "ADMIN".equals(rol.getNombre());
     }
 
     public boolean isAsistente() {
-        return rol != null && "ASISTENTE".equalsIgnoreCase(rol.getNombre());
+        return rol != null && "ASISTENTE".equals(rol.getNombre());
     }
 
     public boolean isUsuario() {

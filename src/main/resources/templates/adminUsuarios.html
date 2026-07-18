@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+
+
 </head>
 
 <body class="bg-light">
@@ -15,10 +17,20 @@
     <header th:replace="~{fragments/layout :: headerFragment}"></header>
 
     <main class="container py-4">
+        <span class="badge bg-info" th:text="'esAdmin: ' + ${esAdmin}"></span>
+        <span class="badge bg-info" th:text="'esAsistente: ' + ${esAsistente}"></span>
+        <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${mensaje}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
         <!-- Título y botón agregar -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="fas fa-users-cog me-2"></i>Gestión de Usuarios</h2>
-            <button class="btn btn-success" onclick="abrirModalAgregar()">
+            <button class="btn btn-success" onclick="abrirModalAgregar()" th:if="${esAdmin or esAsistente}">
                 <i class="fas fa-user-plus"></i> Agregar Usuario
             </button>
         </div>
@@ -77,15 +89,18 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario(this)"
-                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol=${u.rol}, data-activo=${u.activo}">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="editarUsuario(this)"
+                                        th:attr="data-id=${u.id}, data-nombre=${u.nombre}, data-correo=${u.correo}, data-rol-id=${u.rol.nombre}, data-activo=${u.activo}">
                                         <i class="fas fa-edit"></i>
                                     </button>
+
                                     <button class="btn btn-sm btn-outline-danger" onclick="eliminarUsuario(this)"
-                                        th:attr="data-id=${u.id}">
+                                        th:attr="data-id=${u.id}"
+                                        th:if="${esAdmin} or (${esAsistente} and ${u.rol != null and u.rol.nombre != 'ADMIN'})">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
+
                             </tr>
                         </tbody>
                     </table>
@@ -126,8 +141,10 @@
                         <!-- Rol (texto directo, no ID) -->
                         <div class="mb-3">
                             <label>Rol:</label>
-                            <select name="rolNombre" id="editRol" class="form-select">
-                                <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}"></option>
+                            <select name="rolNombre" id="editRolId" class="form-select"> <!-- ✅ id="editRolId" -->
+                                <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}"
+                                    th:if="${esAdmin} or (${r.nombre != 'ADMIN'})">
+                                </option>
                             </select>
                         </div>
 
@@ -178,14 +195,8 @@
             </div>
         </div>
     </div>
-    <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <span th:text="${mensaje}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <span th:text="${error}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+
+    <!-- Footer -->
     <footer th:replace="~{fragments/layout :: footerFragment}"></footer>
     <div th:replace="~{fragments/chatbot :: chatbot}"></div>
     <div th:replace="~{fragments/darkmode :: darkmode}"></div>
@@ -201,6 +212,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>
